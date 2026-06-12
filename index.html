@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #050510; font-family: sans-serif; user-select: none; touch-action: none; }
+        #game { width: 100vw; height: 100vh; position: relative; overflow: hidden; background: radial-gradient(circle at center, #0f172a 0%, #020205 100%); }
+        .stars { position: absolute; inset: 0; background-image: radial-gradient(1px 1px at 20px 30px, #fff, transparent), radial-gradient(1.5px 1.5px at 150px 80px, #60a5fa, transparent); background-size: 150px 150px; animation: scroll 4s linear infinite; opacity: 0.5; }
+        @keyframes scroll { from { transform: translateY(0); } to { transform: translateY(150px); } }
+        #player { position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%); width: 60px; height: 75px; z-index: 100; transition: left 0.15s ease; }
+        .wings { width: 100%; height: 25px; background: #1e3a8a; border-radius: 10px; position: absolute; bottom: 10px; border: 2px solid #3b82f6; }
+        .core { width: 26px; height: 65px; background: #f8fafc; border-radius: 50% 50% 20% 20%; margin: 0 auto; position: relative; border: 2px solid #94a3b8; }
+        .fire { width: 12px; height: 25px; background: linear-gradient(to bottom, #ff781e, transparent); position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); border-radius: 0 0 50% 50%; animation: flame 0.1s infinite alternate; }
+        @keyframes flame { from { height: 15px; } to { height: 25px; } }
+        #hud { position: absolute; top: 0; inset-x: 0; padding: 15px; display: flex; justify-content: space-between; z-index: 200; color: white; font-weight: bold; font-size: 12px; }
+        .bar { width: 80px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; margin-top: 4px; }
+        #fuel-fill { width: 100%; height: 100%; background: #06b6d4; }
+        .screen { position: absolute; inset: 0; background: rgba(5, 5, 15, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; color: white; text-align: center; padding: 20px; }
+        .screen.active { display: flex; }
+        h1 { font-size: 36px; margin: 0 0 5px 0; color: #3b82f6; font-weight: 900; }
+        .btn { background: #2563eb; color: white; padding: 12px 40px; border-radius: 10px; font-weight: bold; font-size: 18px; border: none; margin-top: 20px; }
+        .shop { background: #1e293b; padding: 10px 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; width: 260px; margin-bottom: 10px; box-sizing: border-box; }
+        .shop-btn { background: #f59e0b; color: #000; font-weight: bold; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+        .entity { position: absolute; transform: translateX(-50%); font-size: 35px; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+        .tail { width: 6px; height: 40px; background: linear-gradient(to top, #ef4444, transparent); margin-top: -10px; }
+        .pop { position: absolute; font-weight: bold; font-size: 16px; animation: float 0.5s ease-out forwards; text-shadow: 0 2px 4px #000; }
+        @keyframes float { to { transform: translateY(-40px); opacity: 0; } }
+    </style>
+</head>
+<body>
+<div id="game">
+    <div class="stars"></div>
+    <div style="position:absolute; top:0; left:0; bottom:0; width:50%; z-index:50;" onclick="tMove('left')"></div>
+    <div style="position:absolute; top:0; right:0; bottom:0; width:50%; z-index:50;" onclick="tMove('right')"></div>
+    <div id="hud">
+        <div>PTS: <span id="s-val" style="color:#22d3ee; font-size:16px;">0</span>
